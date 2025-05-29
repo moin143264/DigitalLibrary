@@ -1,0 +1,12 @@
+.table-primary {
+  display: flex;
+  flex-direction: column;
+}
+
+.table-primary thead {
+  order: 2; /* Set order to 2 to appear after tbody */
+}
+
+.table-primary tbody {
+  order: 1; /* Set order to 1 to appear before thead */
+}

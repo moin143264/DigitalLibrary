@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dynamic Search</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      #bookList .book {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin: 5px 0;
+        border-radius: 5px;
+      }
+
+      .highlight {
+        background-color: yellow;
+        font-weight: bold;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <form
+      class="d-flex w-50"
+      style="position: relative"
+      id="searchForm"
+      onsubmit="return false;"
+    >
+      <input
+        class="form-control me-sm-2 border border-dark border-3"
+        type="text"
+        id="searchQuery"
+        placeholder="Search for a book..."
+        onkeyup="searchBooks()"
+        style="box-shadow: none; max-width: 100%"
+      />
+      <button
+        class="btn btn-outline-background"
+        type="submit"
+        style="position: absolute; right: 10px; top: 0; bottom: 0; border: none"
+      >
+        <i class="fa-solid fa-magnifying-glass fa-flip fa-md search-icon"></i>
+      </button>
+    </form>
+
+    <div id="bookList">
+      <div class="book">
+        <h3 class="book-title">The Great Gatsby</h3>
+        <p>Author: F. Scott Fitzgerald</p>
+      </div>
+      <div class="book">
+        <h3 class="book-title">To Kill a Mockingbird</h3>
+        <p>Author: Harper Lee</p>
+      </div>
+      <div class="book">
+        <h3 class="book-title">1984</h3>
+        <p>Author: George Orwell</p>
+      </div>
+      <!-- Add more books here -->
+    </div>
+
+    <script>
+      function searchBooks() {
+        var query = document.getElementById("searchQuery").value.toLowerCase();
+        var books = document.querySelectorAll("#bookList .book");
+
+        books.forEach(function (book) {
+          var titleElement = book.querySelector(".book-title");
+          var title = titleElement.textContent.toLowerCase();
+
+          if (title.includes(query)) {
+            book.classList.remove("hidden"); // Show the book
+            highlightText(titleElement, query); // Highlight matching text
+          } else {
+            book.classList.add("hidden"); // Hide the book
+          }
+        });
+      }
+
+      function highlightText(element, query) {
+        var text = element.textContent;
+        var regex = new RegExp("(" + query + ")", "gi");
+        var highlighted = text.replace(
+          regex,
+          '<span class="highlight">$1</span>'
+        );
+        element.innerHTML = highlighted;
+      }
+    </script>
+  </body>
+</html>
